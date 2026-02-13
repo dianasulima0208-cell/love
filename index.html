@@ -33,16 +33,17 @@
     z-index:10;
   }
   #startScreen h1 {
-    font-size:50px;
+    font-size:60px;
     color:#ff3366;
-    margin-bottom:10px;
+    margin-bottom:20px;
   }
   #startScreen p {
     font-size:28px;
     margin-bottom:20px;
+    color: #ff3399; /* текст "Нажми на картинку" розовый */
   }
   #startScreen img {
-    width:250px;
+    width:300px; /* увеличенное фото */
     border-radius:20px;
     cursor:pointer;
     transition: transform 0.3s;
@@ -96,6 +97,7 @@
     color: #ff3366;
     font-size: 24px;
     animation: fall 4s linear infinite;
+    pointer-events: none;
   }
   @keyframes fall {
     0% {top: -30px; opacity: 1;}
@@ -124,7 +126,7 @@
     целую💋💋💋<br>
     love u to eternity🫸🏼💗🫂
   </div>
-  <img id="catImage" src="bby.jpg" alt="cute cat">
+  <img id="catImage" src="lol.jpg" alt="cute cat">
 </div>
 
 <script>
@@ -140,6 +142,19 @@ const mainQuestion = document.getElementById('question');
 
 let clickCount = 0;
 
+// Функция создания падающих 💖 и 👅
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.fontSize = (15 + Math.random() * 30) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 4000);
+}
+// Запуск интервала сразу при загрузке страницы
+setInterval(createHeart, 300);
+
 // Запуск основного экрана после нажатия на картинку
 startImg.addEventListener('click', () => {
   startScreen.style.display = 'none';
@@ -153,9 +168,7 @@ noBtn.addEventListener('mouseover', () => {
   noBtn.style.position = 'absolute';
   noBtn.style.left = x + 'px';
   noBtn.style.top = y + 'px';
-});
-
-// Кнопка "Да" с логикой вопросов
+});// Кнопка "Да" с логикой вопросов
 yesBtn.addEventListener('click', () => {
   clickCount++;
 
@@ -175,20 +188,6 @@ yesBtn.addEventListener('click', () => {
   }
 });
 
-// Падающие сердечки
-function createHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
-  heart.style.left = Math.random() * window.innerWidth + 'px';
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 4000);
-}
-setInterval(createHeart, 300);
-startImg.addEventListener('click', () =>
-startScreen.style.display = ' none';
-mainContent.style.display = 'flex';
-3);
 // Сердечки вокруг финального текста
 function spawnHeartsAround(element, count) {
   const rect = element.getBoundingClientRect();
