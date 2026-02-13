@@ -5,13 +5,14 @@
 <title>Сюрприз 💖</title>
 <style>
   /* Подключаем красивый шрифт, похожий на Annabelle */
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+ 
 
   body {
     margin:0;
-    font-family: 'Great Vibes', cursive; /* Прикольный рукописный шрифт */
+    font-family: 'Times New Roman', Times, serif;
     background: #ffdce6;
     height: 100vh;
+    font-weight: bold;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,7 +66,7 @@
 </head>
 <body>
 
-<h1 id="question">Любишь меня? 💖</h1>
+<h1 id="question">You love me?💖</h1>
 <button id="yes" class="btn">Да</button>
 <button id="no" class="btn">Нет</button>
 
@@ -75,7 +76,7 @@
   целую💋💋💋<br>
   love u to eternity🫸🏼💗🫂
 </div>
-<img id="catImage" src="https://i.imgur.com/7yUVE5r.jpeg" alt="cute cat">
+<img id="catImage" src="bby.jpg" alt="cute cat">
 
 <script>
 const noBtn = document.getElementById('no');
@@ -102,7 +103,7 @@ yesBtn.addEventListener('click', () => {
   if (clickCount === 1) {
     mainQuestion.innerText = "Точно? ✨";
   } else if (clickCount === 2) {
-    mainQuestion.innerText = "Очень очень? 😋";
+    mainQuestion.innerText = "Очень очень?😋";
   } else {
     // Финальное состояние
     mainQuestion.style.display = 'none'; // Убираем заголовок
