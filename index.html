@@ -127,8 +127,12 @@
       max-width: 80%;
     }
     .btn {
-      font-size: 20px;
-      padding: 10px 20px;
+font-size: 28px; 
+      padding: 15px 35px; 
+      margin: 15px;
+      min-width: 140px; 
+      touch-action: manipulation; 
+    
     }
   }
 </style>
@@ -161,7 +165,6 @@
 const startScreen = document.getElementById('startScreen');
 const startImg = document.getElementById('startImg');
 const mainContent = document.getElementById('mainContent');
-
 const noBtn = document.getElementById('no');
 const yesBtn = document.getElementById('yes');
 const message = document.getElementById('message');
@@ -170,7 +173,6 @@ const mainQuestion = document.getElementById('question');
 
 let clickCount = 0;
 
-// Функция создания падающих 💖 и 👅
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
@@ -178,46 +180,47 @@ function createHeart() {
   heart.style.left = Math.random() * window.innerWidth + 'px';
   heart.style.fontSize = (15 + Math.random() * 30) + 'px';
   document.body.appendChild(heart);
-   heart.style.zIndex = 11; // чтобы сердечки были поверх стартового экрана
+  heart.style.zIndex = 11;
   setTimeout(() => heart.remove(), 4000);
 }
-// Запуск интервала сразу при загрузке страницы
 setInterval(createHeart, 300);
 
-// Запуск основного экрана после нажатия на картинку
 startImg.addEventListener('click', () => {
   startScreen.style.display = 'none';
   mainContent.style.display = 'flex';
 });
 
-// Кнопка "Нет" убегает
-noBtn.addEventListener('mouseover', () => {
+// Функция, которая заставляет кнопку прыгать
+function moveButton(e) {
+  if (e) e.preventDefault(); // Это запрещает нажатие на телефоне
   const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
   const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-  noBtn.style.position = 'absolute';
+  noBtn.style.position = 'fixed';
   noBtn.style.left = x + 'px';
   noBtn.style.top = y + 'px';
-});// Кнопка "Да" с логикой вопросов
+}
+
+// Слушаем и мышку, и касание пальцем
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', moveButton, {passive: false});
+noBtn.addEventListener('click', moveButton);
+
 yesBtn.addEventListener('click', () => {
   clickCount++;
-
   if (clickCount === 1) {
     mainQuestion.innerText = "Точно? ✨";
   } else if (clickCount === 2) {
     mainQuestion.innerText = "ряльно?😟😟";
   } else {
-    // Финальное состояние
     mainQuestion.style.display = 'none';
     yesBtn.style.display = 'none';
     noBtn.style.display = 'none';
-    
     message.style.display = 'block';
     catImage.style.display = 'block';
     spawnHeartsAround(message, 50);
   }
 });
 
-// Сердечки вокруг финального текста
 function spawnHeartsAround(element, count) {
   const rect = element.getBoundingClientRect();
   for (let i = 0; i < count; i++) {
@@ -229,7 +232,7 @@ function spawnHeartsAround(element, count) {
     heart.style.fontSize = (10 + Math.random() * 30) + 'px';
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 4000 + Math.random()*2000);
-  }
+  
 }
 </script>
 </body>
