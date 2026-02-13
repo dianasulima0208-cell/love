@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <title>Сюрприз 💖</title>
 <style>
-  /* Подключаем красивый шрифт, похожий на Annabelle */
- 
-
   body {
     margin:0;
     font-family: 'Times New Roman', Times, serif;
@@ -20,9 +17,51 @@
     text-align: center;
     overflow: hidden;
   }
+
+  /* Стартовый экран */
+  #startScreen {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#ffdce6;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:10;
+  }
+  #startScreen h1 {
+    font-size:50px;
+    color:#ff3366;
+    margin-bottom:10px;
+  }
+  #startScreen p {
+    font-size:28px;
+    margin-bottom:20px;
+  }
+  #startScreen img {
+    width:250px;
+    border-radius:20px;
+    cursor:pointer;
+    transition: transform 0.3s;
+  }
+  #startScreen img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Основной экран */
+  #mainContent {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   h1 { 
     color: #ff3366; 
-    font-size: 50px; /* Увеличил для красоты */
+    font-size: 50px; 
     margin-bottom: 30px; 
   }
   .btn { 
@@ -36,7 +75,7 @@
     margin: 10px;
     position: relative;
     transition: transform 0.2s;
-    font-family: 'Arial', sans-serif; /* Кнопки лучше оставить читаемыми */
+    font-family: 'Arial', sans-serif;
   }
   #message {
     display: none;
@@ -66,19 +105,33 @@
 </head>
 <body>
 
-<h1 id="question">You love me?💖</h1>
-<button id="yes" class="btn">Да</button>
-<button id="no" class="btn">Нет</button>
-
-<div id="message">
-  LOVE U SO MUCH BAE<br>
-  скучаю очень очень, люблю еще больше,<br>
-  целую💋💋💋<br>
-  love u to eternity🫸🏼💗🫂
+<!-- Стартовый экран -->
+<div id="startScreen">
+  <h1>Для любимого 👅💋💘</h1>
+  <p>⬇️ Нажми на картинку ⬇️</p>
+  <img id="startImg" src="bby.jpg" alt="Начать">
 </div>
-<img id="catImage" src="bby.jpg" alt="cute cat">
+
+<!-- Основной контент -->
+<div id="mainContent">
+  <h1 id="question">You love me?💖</h1>
+  <button id="yes" class="btn">Да</button>
+  <button id="no" class="btn">Нет</button>
+
+  <div id="message">
+    LOVE U SO MUCH BAE<br>
+    скучаю очень очень, люблю еще больше,<br>
+    целую💋💋💋<br>
+    love u to eternity🫸🏼💗🫂
+  </div>
+  <img id="catImage" src="bby.jpg" alt="cute cat">
+</div>
 
 <script>
+const startScreen = document.getElementById('startScreen');
+const startImg = document.getElementById('startImg');
+const mainContent = document.getElementById('mainContent');
+
 const noBtn = document.getElementById('no');
 const yesBtn = document.getElementById('yes');
 const message = document.getElementById('message');
@@ -86,6 +139,12 @@ const catImage = document.getElementById('catImage');
 const mainQuestion = document.getElementById('question');
 
 let clickCount = 0;
+
+// Запуск основного экрана после нажатия на картинку
+startImg.addEventListener('click', () => {
+  startScreen.style.display = 'none';
+  mainContent.style.display = 'flex';
+});
 
 // Кнопка "Нет" убегает
 noBtn.addEventListener('mouseover', () => {
@@ -106,7 +165,7 @@ yesBtn.addEventListener('click', () => {
     mainQuestion.innerText = "Очень очень?😋";
   } else {
     // Финальное состояние
-    mainQuestion.style.display = 'none'; // Убираем заголовок
+    mainQuestion.style.display = 'none';
     yesBtn.style.display = 'none';
     noBtn.style.display = 'none';
     
@@ -116,26 +175,29 @@ yesBtn.addEventListener('click', () => {
   }
 });
 
+// Падающие сердечки
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-  heart.innerText = '💖';
+  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
   heart.style.left = Math.random() * window.innerWidth + 'px';
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 4000);
 }
 setInterval(createHeart, 300);
 
+// Сердечки вокруг финального текста
 function spawnHeartsAround(element, count) {
   const rect = element.getBoundingClientRect();
   for (let i = 0; i < count; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.innerText = '💖';
+    heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
     heart.style.left = rect.left + rect.width/2 + (Math.random()*200 - 100) + 'px';
     heart.style.top = rect.top + rect.height/2 + (Math.random()*200 - 100) + 'px';
+    heart.style.fontSize = (10 + Math.random() * 30) + 'px';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
+    setTimeout(() => heart.remove(), 4000 + Math.random()*2000);
   }
 }
 </script>
