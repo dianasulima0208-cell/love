@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Сюрприз 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=AnnabelleJF&display=swap" rel="stylesheet">
 <style>
   body {
     margin:0;
-    font-family: 'Arial', sans-serif;
-    background: #ffdce6; /* нежно-розовый фон */
+    font-family: 'AnnabelleJF', cursive;
+    background: #ffdce6;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,6 +21,8 @@
     color: #ff3366; 
     font-size: 36px; 
     margin-bottom: 30px; 
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
   }
   .btn { 
     padding: 12px 24px; 
@@ -31,7 +34,7 @@
     cursor: pointer;
     margin: 10px;
     position: relative;
-    transition: transform 0.2s;
+    transition: transform 0.2s, opacity 0.5s ease-in-out;
   }
   #message {
     display: none;
@@ -66,7 +69,7 @@
 </head>
 <body>
 
-<h1>Любишь меня? 💖</h1>
+<h1 id="question">Любишь меня? 💖</h1>
 <button id="yes" class="btn">Да</button>
 <button id="no" class="btn">Нет</button>
 
@@ -81,8 +84,12 @@
 <script>
 const noBtn = document.getElementById('no');
 const yesBtn = document.getElementById('yes');
+const question = document.getElementById('question');
 const message = document.getElementById('message');
 const catImage = document.getElementById('catImage');
+
+const questions = ["Любишь меня? 💖", "Точно?", "Очень очень? 😋"];
+let step = 0;
 
 // Кнопка "Нет" убегает
 noBtn.addEventListener('mouseover', () => {
@@ -91,27 +98,38 @@ noBtn.addEventListener('mouseover', () => {
   noBtn.style.position = 'absolute';
   noBtn.style.left = x + 'px';
   noBtn.style.top = y + 'px';
-  noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`; // чуть повернуть для эффекта
+  noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`;
 });
 
-// Кнопка "Да" показывает текст и котиков
+// Кнопка "Да" продвигает шаг
 yesBtn.addEventListener('click', () => {
-  message.style.display = 'block';
-  catImage.style.display = 'block';
-  setTimeout(() => {
-    message.style.opacity = 1;
-    catImage.style.opacity = 1;
-  }, 50);
-  yesBtn.style.display = 'none';
-  noBtn.style.display = 'none';
-  spawnHeartsAround(message, 50);
+  step++;
+  if(step < questions.length) {
+    question.style.opacity = 0;
+    setTimeout(() => {
+      question.textContent = questions[step];
+      question.style.opacity = 1;
+    }, 300);
+  } else {
+    // Финал: скрываем вопрос и кнопки, показываем текст и котика
+    question.style.display = 'none';
+    yesBtn.style.display = 'none';
+    noBtn.style.display = 'none';
+    message.style.display = 'block';
+    catImage.style.display = 'block';
+    setTimeout(() => {
+      message.style.opacity = 1;
+      catImage.style.opacity = 1;
+    }, 50);
+    spawnHeartsAround(message, 50);
+  }
 });
 
-// Фоновые падающие сердечки
+// Фоновые падающие сердечки и смайлики 👅
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-  heart.innerText = '💖';
+  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
   heart.style.left = Math.random() * window.innerWidth + 'px';
   heart.style.fontSize = (10 + Math.random() * 30) + 'px';
   document.body.appendChild(heart);
@@ -119,13 +137,12 @@ function createHeart() {
 }
 setInterval(createHeart, 300);
 
-// Создаём сердечки вокруг элемента
-function spawnHeartsAround(element, count) {
-  const rect = element.getBoundingClientRect();
+// Сердечки вокруг элемента при финале
+function spawnHeartsAround(element, count) {const rect = element.getBoundingClientRect();
   for (let i = 0; i < count; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.innerText = '💖';
+    heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
     heart.style.left = rect.left + rect.width/2 + (Math.random()*200 - 100) + 'px';
     heart.style.top = rect.top + rect.height/2 + (Math.random()*200 - 100) + 'px';
     heart.style.fontSize = (10 + Math.random() * 30) + 'px';
