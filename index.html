@@ -150,6 +150,7 @@ function createHeart() {
   heart.style.left = Math.random() * window.innerWidth + 'px';
   heart.style.fontSize = (15 + Math.random() * 30) + 'px';
   document.body.appendChild(heart);
+   heart.style.zIndex = 11; // чтобы сердечки были поверх стартового экрана
   setTimeout(() => heart.remove(), 4000);
 }
 // Запуск интервала сразу при загрузке страницы
