@@ -176,26 +176,16 @@ let clickCount = 0;
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-// Создаем массив: сердечко, язык или слово KISS
-  const items = ['💖', '👅', 'KISS', '💋'];
-  // Выбираем случайный элемент из списка
-  const randomItem = items[Math.floor(Math.random() * items.length)];
-  
-  heart.innerText = randomItem;
-  
+// Функция создания падающих 💖 и 👅
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
   heart.style.left = Math.random() * window.innerWidth + 'px';
-  
-  // Если это слово KISS, делаем шрифт чуть поменьше, чтобы влезало
-  if (randomItem === 'KISS') {
-    heart.style.fontSize = (12 + Math.random() * 15) + 'px';
-  } else {
-    heart.style.fontSize = (15 + Math.random() * 30) + 'px';
-  }
-  
+  heart.style.fontSize = (15 + Math.random() * 30) + 'px';
   document.body.appendChild(heart);
-  heart.style.zIndex = 11;
+   heart.style.zIndex = 11; // чтобы сердечки были поверх стартового экрана
   setTimeout(() => heart.remove(), 4000);
-}
 }
 // Запуск интервала сразу при загрузке страницы
 setInterval(createHeart, 300);
