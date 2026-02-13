@@ -108,8 +108,8 @@
 <!-- Стартовый экран -->
 <div id="startScreen">
   <h1>Для любимого 👅💋💘</h1>
-  <p>⬇️ Нажми на картинку ⬇️</p>
-  <img id="startImg" src="bby.jpg" alt="Начать">
+  <p>⬇️Нажми⬇️</p>
+  <img id="startImg" src="foto.jpg" alt="Начать">
 </div>
 
 <!-- Основной контент -->
@@ -185,7 +185,10 @@ function createHeart() {
   setTimeout(() => heart.remove(), 4000);
 }
 setInterval(createHeart, 300);
-
+startImg.addEventListener('click', () =>
+startScreen.style.display = ' none';
+mainContent.style.display = 'flex';
+3);
 // Сердечки вокруг финального текста
 function spawnHeartsAround(element, count) {
   const rect = element.getBoundingClientRect();
