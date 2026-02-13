@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Сюрприз 💖</title>
+<style>
+  body {
+    margin:0;
+    font-family: 'Arial', sans-serif;
+    background: #ffdce6; /* нежно-розовый фон */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  h1 { 
+    color: #ff3366; 
+    font-size: 36px; 
+    margin-bottom: 30px; 
+  }
+  .btn { 
+    padding: 12px 24px; 
+    font-size: 20px; 
+    border:none; 
+    border-radius: 12px; 
+    background: #ff6699; 
+    color: white; 
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  #message {
+    display: none;
+    margin-top: 30px;
+    font-size: 24px;
+    color: #ff0066;
+    line-height: 1.5;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  #catImage {
+    display: none;
+    margin-top: 20px;
+    max-width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .heart {
+    position: absolute;
+    color: #ff3366;
+    font-size: 24px;
+    animation: fall 4s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes fall {
+    0% {top: -30px; opacity: 1;}
+    100% {top: 100vh; opacity: 0;}
+  }
+</style>
+</head>
+<body>
+
+<h1>Любишь меня? 💖</h1>
+<button id="yes" class="btn">Да</button>
+<button id="no" class="btn">Нет</button>
+
+<div id="message">
+  LOVE U SO MUCH BAE<br>
+  скучаю очень очень, люблю еще больше,<br>
+  целую💋💋💋<br>
+  love u to eternity🫸🏼💗🫂
+</div>
+<img id="catImage" src="https://i.imgur.com/7yUVE5r.jpeg" alt="cute cat">
+
+<script>
+const noBtn = document.getElementById('no');
+const yesBtn = document.getElementById('yes');
+const message = document.getElementById('message');
+const catImage = document.getElementById('catImage');
+
+// Кнопка "Нет" убегает
+noBtn.addEventListener('mouseover', () => {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.position = 'absolute';
+  noBtn.style.left = x + 'px';
+  noBtn.style.top = y + 'px';
+  noBtn.style.transform = `rotate(${Math.random()*30-15}deg)`; // чуть повернуть для эффекта
+});
+
+// Кнопка "Да" показывает текст и котиков
+yesBtn.addEventListener('click', () => {
+  message.style.display = 'block';
+  catImage.style.display = 'block';
+  setTimeout(() => {
+    message.style.opacity = 1;
+    catImage.style.opacity = 1;
+  }, 50);
+  yesBtn.style.display = 'none';
+  noBtn.style.display = 'none';
+  spawnHeartsAround(message, 50);
+});
+
+// Фоновые падающие сердечки
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerText = '💖';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 4000);
+}
+setInterval(createHeart, 300);
+
+// Создаём сердечки вокруг элемента
+function spawnHeartsAround(element, count) {
+  const rect = element.getBoundingClientRect();
+  for (let i = 0; i < count; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = '💖';
+    heart.style.left = rect.left + rect.width/2 + (Math.random()*200 - 100) + 'px';
+    heart.style.top = rect.top + rect.height/2 + (Math.random()*200 - 100) + 'px';
+    heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000 + Math.random()*2000);
+  }
+}
+</script>
+
+</body>
+</html>
