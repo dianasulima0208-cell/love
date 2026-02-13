@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Сюрприз 💖</title>
 <style>
   body {
@@ -102,6 +103,33 @@
   @keyframes fall {
     0% {top: -30px; opacity: 1;}
     100% {top: 100vh; opacity: 0;}
+  }
+  /* Адаптация для мобильных устройств */
+  @media (max-width: 600px) {
+    #startScreen h1 {
+      font-size: 32px; /* Уменьшаем заголовок */
+    }
+    #startScreen p {
+      font-size: 20px;
+    }
+    #startScreen img {
+      width: 85%; /* Картинка теперь подстраивается под экран */
+      max-width: 320px;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    #message {
+      font-size: 24px; /* Текст признания станет читабельным */
+      padding: 0 10px;
+    }
+    #catImage {
+      max-width: 80%;
+    }
+    .btn {
+      font-size: 20px;
+      padding: 10px 20px;
+    }
   }
 </style>
 </head>
