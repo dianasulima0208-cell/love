@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Сюрприз 💖</title>
+<title>4mylove 💖</title>
 <style>
   body {
     margin:0;
@@ -153,7 +153,7 @@ font-size: 28px;
   <button id="no" class="btn">Нет</button>
 
   <div id="message">
-    LOVE U SO MUCH BAE<br>
+    LOVE U SO MUCH mein Liebling💓<br>
     скучаю очень очень, люблю еще больше,<br>
     целую💋💋💋<br>
     love u to eternity🫸🏼💗🫂
@@ -173,17 +173,29 @@ const catImage = document.getElementById('catImage');
 const mainQuestion = document.getElementById('question');
 
 let clickCount = 0;
-
-// Функция создания падающих 💖 и 👅
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
+// Создаем массив: сердечко, язык или слово KISS
+  const items = ['💖', '👅', 'KISS', '💋'];
+  // Выбираем случайный элемент из списка
+  const randomItem = items[Math.floor(Math.random() * items.length)];
+  
+  heart.innerText = randomItem;
+  
   heart.style.left = Math.random() * window.innerWidth + 'px';
-  heart.style.fontSize = (15 + Math.random() * 30) + 'px';
+  
+  // Если это слово KISS, делаем шрифт чуть поменьше, чтобы влезало
+  if (randomItem === 'KISS') {
+    heart.style.fontSize = (12 + Math.random() * 15) + 'px';
+  } else {
+    heart.style.fontSize = (15 + Math.random() * 30) + 'px';
+  }
+  
   document.body.appendChild(heart);
-   heart.style.zIndex = 11; // чтобы сердечки были поверх стартового экрана
+  heart.style.zIndex = 11;
   setTimeout(() => heart.remove(), 4000);
+}
 }
 // Запуск интервала сразу при загрузке страницы
 setInterval(createHeart, 300);
