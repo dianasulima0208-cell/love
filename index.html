@@ -131,10 +131,8 @@ font-size: 28px;
       padding: 15px 35px; 
       margin: 15px;
       min-width: 140px; 
-      touch-action: manipulation; 
-    
+      touch-action: manipulation;
     }
-  }
 </style>
 </head>
 <body>
@@ -165,7 +163,6 @@ font-size: 28px;
 const startScreen = document.getElementById('startScreen');
 const startImg = document.getElementById('startImg');
 const mainContent = document.getElementById('mainContent');
-
 const noBtn = document.getElementById('no');
 const yesBtn = document.getElementById('yes');
 const message = document.getElementById('message');
@@ -173,68 +170,78 @@ const catImage = document.getElementById('catImage');
 const mainQuestion = document.getElementById('question');
 
 let clickCount = 0;
+
+// Функция для летающих элементов (сердечки, языки, поцелуи)
 function createHeart() {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-// Функция создания падающих 💖 и 👅
-function createHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
+  
+  const items = ['💖', '👅', 'KISS', '💋'];
+  const randomItem = items[Math.floor(Math.random() * items.length)];
+  
+  heart.innerText = randomItem;
   heart.style.left = Math.random() * window.innerWidth + 'px';
-  heart.style.fontSize = (15 + Math.random() * 30) + 'px';
+  
+  if (randomItem === 'KISS') {
+    heart.style.fontSize = (16 + Math.random() * 10) + 'px';
+  } else {
+    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+  }
+  
   document.body.appendChild(heart);
-   heart.style.zIndex = 11; // чтобы сердечки были поверх стартового экрана
+  heart.style.zIndex = 11;
   setTimeout(() => heart.remove(), 4000);
 }
-// Запуск интервала сразу при загрузке страницы
+
 setInterval(createHeart, 300);
 
-// Запуск основного экрана после нажатия на картинку
+// Переход со стартового экрана
 startImg.addEventListener('click', () => {
   startScreen.style.display = 'none';
   mainContent.style.display = 'flex';
 });
 
-// Кнопка "Нет" убегает
-noBtn.addEventListener('mouseover', () => {
+// Кнопка "Нет" убегает (для мышки и тачскрина)
+function moveButton(e) {
+  if (e) e.preventDefault();
   const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
   const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-  noBtn.style.position = 'absolute';
+  noBtn.style.position = 'fixed';
   noBtn.style.left = x + 'px';
   noBtn.style.top = y + 'px';
-});// Кнопка "Да" с логикой вопросов
+}
+
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', moveButton, {passive: false});
+noBtn.addEventListener('click', moveButton);
+
+// Кнопка "Да"
 yesBtn.addEventListener('click', () => {
   clickCount++;
-
   if (clickCount === 1) {
     mainQuestion.innerText = "Точно? ✨";
   } else if (clickCount === 2) {
     mainQuestion.innerText = "ряльно?😟😟";
   } else {
-    // Финальное состояние
     mainQuestion.style.display = 'none';
     yesBtn.style.display = 'none';
     noBtn.style.display = 'none';
-    
     message.style.display = 'block';
     catImage.style.display = 'block';
     spawnHeartsAround(message, 50);
   }
 });
 
-// Сердечки вокруг финального текста
 function spawnHeartsAround(element, count) {
   const rect = element.getBoundingClientRect();
   for (let i = 0; i < count; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.innerText = Math.random() < 0.7 ? '💖' : '👅';
+    heart.innerText = Math.random() < 0.5 ? '💋' : '💖';
     heart.style.left = rect.left + rect.width/2 + (Math.random()*200 - 100) + 'px';
     heart.style.top = rect.top + rect.height/2 + (Math.random()*200 - 100) + 'px';
-    heart.style.fontSize = (10 + Math.random() * 30) + 'px';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000 + Math.random()*2000);
+    setTimeout(() => heart.remove(), 4000);
   }
 }
 </script>
